@@ -2,13 +2,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { CountryPanelComponent } from './country-panel/country-panel.component';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
     BrowserModule
+  ],
+  declarations: [
+    AppComponent,
+    CountryPanelComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
