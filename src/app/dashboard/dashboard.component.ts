@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { StatisticsServiceService } from '../services/statistics-service.service'
+import { CounterCard } from '../components/counter-card/counter-card';
+import { CounterCardComponent } from '../components/counter-card/counter-card.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,9 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  private _statisticsService: StatisticsServiceService;
+
+  public summary: CounterCard[] = [];
+
+  constructor(private statisticsService: StatisticsServiceService) {
+    this._statisticsService = statisticsService;
+  }
 
   ngOnInit(): void {
+    this._statisticsService.getSumamry()
+    .subscribe(r => {
+      console.log(r);
+      this.summary.push({ label: 'New Deaths', value: r.NewDeaths, icon: 'procedures', color:'red' } as CounterCard)
+      this.summary.push({ label: 'New Cases', value: r.NewConfirmed, icon: 'virus', color:'yellow' } as CounterCard)
+      this.summary.push({ label: 'New Recovered', value: r.NewRecovered, icon: 'clipboard-check', color:'green' } as CounterCard)
+      this.summary.push({ label: 'Total Deaths', value: r.TotalDeaths, icon: 'procedures', color:'red' } as CounterCard)
+      this.summary.push({ label: 'Total Cases', value: r.TotalConfirmed, icon: 'viruses', color:'yellow' } as CounterCard)
+      this.summary.push({ label: 'Total Recorvered', value: r.TotalRecovered, icon: 'clipboard-check', color:'green' } as CounterCard)
+    });
   }
 
 }

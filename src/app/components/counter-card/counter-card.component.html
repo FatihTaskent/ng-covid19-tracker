@@ -1,0 +1,11 @@
+<div class="bg-{{counter.color}}-100 border-b-4 border-{{counter.color}}-600 rounded-lg shadow-lg p-5 hover:shadow-xl">
+    <div class="flex flex-row items-center">
+        <div class="flex-shrink pr-4">
+            <div class="rounded-full p-5 bg-{{counter.color}}-600"><i class="fa fa-{{counter.icon}} fa-2x fa-inverse"></i></div>
+        </div>
+        <div class="flex-1 text-right md:text-center">
+            <h5 class="font-bold uppercase text-gray-600">{{counter.label}}</h5>
+            <h3 class="font-bold text-3xl">{{counter.value | number: '2.'}} <!--<span class="text-{{color}}-500"><i class="fa fa-caret-up"></i></span>--></h3>
+        </div>
+    </div>
+</div>
