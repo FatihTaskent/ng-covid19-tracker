@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { TotalStats } from '../models/TotalStats';
 import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
-import { ReturnStatement } from '@angular/compiler';
+import { CovidData } from '../models/coviddata';
 
 @Injectable({
   providedIn: 'root'
@@ -25,4 +25,33 @@ export class StatisticsServiceService {
       .pipe(map(res => res["Global"] as TotalStats))
   }
 
+  // getAllForCountry(country: string): Observable<any> {
+  //   let data = this._httpClient
+  //     .get
+
+
+  //   return null;
+  // }
+
+  getCasesForCountry(country: string): Observable<CovidData[]> {
+    return this._httpClient.get(`https://api.covid19api.com/total/dayone/country/${country}/status/confirmed`)
+      .pipe(map(result => 
+        (<Array<any>>result).map(r => new CovidData(r["Cases"], new Date(r["Date"])))
+      ));
+  }
+
+
+  getDeathsForCountry(country: string): Observable<CovidData[]> {
+    return this._httpClient.get(`https://api.covid19api.com/total/dayone/country/${country}/status/deaths`)
+      .pipe(map(result => 
+        (<Array<any>>result).map(r => new CovidData(r["Cases"], new Date(r["Date"])))
+      ));
+  }
+
+  getRecoveredForCountry(country: string): Observable<CovidData[]> {
+    return this._httpClient.get(`https://api.covid19api.com/total/dayone/country/${country}/status/deaths`)
+      .pipe(map(result => 
+        (<Array<any>>result).map(r => new CovidData(r["Cases"], new Date(r["Date"])))
+      ));
+  }
 }
