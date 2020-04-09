@@ -1,0 +1,18 @@
+<div class="flex flex-row flex-wrap flex-grow mt-12">
+    <div class="w-full w-full p-3">
+        <div class="bg-white border-transparent rounded-lg shadow-lg">
+            <div class="bg-gray-700 uppercase text-gray-800 border-b-2 rounded-tl-lg rounded-tr-lg p-2">
+                <h5 class="font-bold uppercase text-white pl-1">Compare Countries from first day since covid-19 was confirmed</h5>
+            </div>
+            <div class="p-5">
+                <canvas baseChart width="400" height="200"
+                    [datasets]="lineChartData"
+                    [options]="lineChartOptions"
+                    [labels]="lineChartLabels"
+                    [legend]="lineChartLegend"
+                    [chartType]="'line'">
+               </canvas>
+            </div>
+        </div>
+    </div>
+</div>

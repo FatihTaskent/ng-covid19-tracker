@@ -11,6 +11,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CounterCardComponent } from './components/counter-card/counter-card.component'
 import { NavComponent } from './nav/nav.component';
 import { StatsChartComponent } from './components/stats-chart/stats-chart.component';
+import { CompareCountriesComponent } from './compare-countries/compare-countries.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { StatsChartComponent } from './components/stats-chart/stats-chart.compon
     DashboardComponent,
     NavComponent,
     CounterCardComponent,
-    StatsChartComponent
+    StatsChartComponent,
+    CompareCountriesComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

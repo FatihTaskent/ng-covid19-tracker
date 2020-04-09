@@ -50,6 +50,7 @@ export class StatsChartComponent implements OnInit {
       this._statisticsService.getCasesForCountry(this.country),
       this._statisticsService.getDeathsForCountry(this.country)
     ).subscribe(([cases, deaths]) => {
+      console.log(cases)
       this.lineChartData = [];
       this.lineChartData.push(this.createSeries("Deaths", deaths, "#e53e3e", "#fff5f5"));
       this.lineChartData.push(this.createSeries("Cases", cases, "#d69e2e", "#fffff0"));

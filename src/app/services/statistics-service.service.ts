@@ -35,23 +35,17 @@ export class StatisticsServiceService {
 
   getCasesForCountry(country: string): Observable<CovidData[]> {
     return this._httpClient.get(`https://api.covid19api.com/total/dayone/country/${country}/status/confirmed`)
-      .pipe(map(result => 
-        (<Array<any>>result).map(r => new CovidData(r["Cases"], new Date(r["Date"])))
-      ));
+      .pipe(map(result => (<any[]>result).map(data => CovidData.FromData(data) )));
   }
 
 
   getDeathsForCountry(country: string): Observable<CovidData[]> {
     return this._httpClient.get(`https://api.covid19api.com/total/dayone/country/${country}/status/deaths`)
-      .pipe(map(result => 
-        (<Array<any>>result).map(r => new CovidData(r["Cases"], new Date(r["Date"])))
-      ));
+    .pipe(map(result => (<any[]>result).map(data => CovidData.FromData(data) )));
   }
 
   getRecoveredForCountry(country: string): Observable<CovidData[]> {
     return this._httpClient.get(`https://api.covid19api.com/total/dayone/country/${country}/status/deaths`)
-      .pipe(map(result => 
-        (<Array<any>>result).map(r => new CovidData(r["Cases"], new Date(r["Date"])))
-      ));
+    .pipe(map(result => (<any[]>result).map(data => CovidData.FromData(data) )));
   }
 }
