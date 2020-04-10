@@ -27,6 +27,7 @@ export class CompareCountriesComponent implements OnInit {
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     annotation: null,
     responsive: true,
+    maintainAspectRatio: false,
     tooltips: { 
       mode: 'index', 
       intersect: false 
@@ -81,7 +82,6 @@ export class CompareCountriesComponent implements OnInit {
 
 
   private createSeries(data: CovidData[] ,backgroundColor: string, borderColor: string) :ChartDataSets {
-    console.log(data.map(c => c.cases));
     return {
       label: data[0].country, 
       data: data.map(c => c.cases), 
