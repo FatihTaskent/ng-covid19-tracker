@@ -25,19 +25,10 @@ export class StatisticsServiceService {
       .pipe(map(res => res["Global"] as TotalStats))
   }
 
-  // getAllForCountry(country: string): Observable<any> {
-  //   let data = this._httpClient
-  //     .get
-
-
-  //   return null;
-  // }
-
   getCasesForCountry(country: string): Observable<CovidData[]> {
     return this._httpClient.get(`https://api.covid19api.com/total/dayone/country/${country}/status/confirmed`)
       .pipe(map(result => (<any[]>result).map(data => CovidData.FromData(data) )));
   }
-
 
   getDeathsForCountry(country: string): Observable<CovidData[]> {
     return this._httpClient.get(`https://api.covid19api.com/total/dayone/country/${country}/status/deaths`)

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StatisticsServiceService } from '../services/statistics-service.service'
-import { CounterCard } from '../components/counter-card/counter-card';
+import { CounterCard } from './counter-card/counter-card';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +12,7 @@ export class DashboardComponent implements OnInit {
 
   public summary: CounterCard[] = [];
 
-  constructor(private statisticsService: StatisticsServiceService) {
+  constructor(statisticsService: StatisticsServiceService) {
     this._statisticsService = statisticsService;
   }
 
