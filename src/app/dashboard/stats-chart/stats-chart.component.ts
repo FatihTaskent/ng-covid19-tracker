@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartPoint } from 'chart.js';
-import { StatisticsServiceService } from 'src/app/services/statistics-service.service';
-import { CovidData } from '../../models/coviddata';
+import { StatisticsServiceService } from 'src/app/core/services/statistics-service.service';
 import { combineLatest } from 'rxjs';
+import { CovidData } from 'src/app/core/models/coviddata';
 
 @Component({
   selector: 'stats-chart',

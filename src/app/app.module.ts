@@ -3,7 +3,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRouterModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { NavComponent } from './nav/nav.component';
 
 import { ChartsModule } from 'ng2-charts';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,8 +16,7 @@ import { BrowserModule } from '@angular/platform-browser';
     AppRouterModule
   ],
   declarations: [
-    AppComponent,
-    NavComponent
+    AppComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

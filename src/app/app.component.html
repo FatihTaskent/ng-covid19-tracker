@@ -1,46 +1,75 @@
-<!--Nav-->
+<!--Top bas-->
 <nav class="bg-gray-900 pt-2 md:pt-1 pb-1 px-1 mt-0 h-auto fixed w-full z-20 top-0 border-b-2 border-gray-800">
 
   <div class="flex flex-wrap items-center">
-    <div class="flex flex-shrink md:w-1/3 justify-center md:justify-start text-white">
-        <span class="text-2xl pl-2"><i class="fas fa-viruses py-3 pr-3"></i>Covid-19 Tracker</span>
+    <div class="flex flex-shrink md:w-1/2 justify-center md:justify-start text-white">
+      <span class="text-2xl pl-2"><i class="fas fa-viruses py-3 pr-3"></i>Covid-19 Tracker</span>
     </div>
 
-    <div class="flex flex-1 md:w-1/3 justify-center md:justify-start text-white px-2">
+    <!-- <div class="flex flex-1 md:w-1/3 justify-center md:justify-start text-white px-2">
       <span class="relative w-full">
         <input type="search" placeholder="Search"
           class="w-full bg-gray-800 text-sm text-white transition border border-transparent focus:outline-none focus:border-gray-700 rounded py-1 px-2 pl-10 appearance-none leading-normal">
         <div class="absolute search-icon" style="top: .5rem; left: .8rem;">
-          <svg class="fill-current pointer-events-none text-white w-4 h-4" xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20">
-            <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z">
-            </path>
+          <svg class="fill-current pointer-events-none text-white w-4 h-4" xmlns="http://www.w3.org/2000/svg"viewBox="0 0 20 20">
+            <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path>
           </svg>
         </div>
       </span>
-    </div>
+    </div> -->
 
-    <div class="flex w-full pt-2 content-center justify-between md:w-1/3 md:justify-end">
+    <div class="flex w-full pt-2 content-center justify-between md:w-1/2 md:justify-end">
       <ul class="list-reset flex justify-between flex-1 md:flex-none items-center">
         <li class="flex-1 md:flex-none md:mr-3">
           <a class="inline-block py-2 px-4 text-white no-underline hover:underline" target="_blank" href="https://github.com/FatihTaskent">by: Fatih Taskent</a>
         </li>
-
       </ul>
-    </div> 
+    </div>
   </div>
 
 </nav>
 
 
 <div class="flex flex-col md:flex-row h-screen">
-
-  <nav-bar class="bg-gray-800 shadow-lg "></nav-bar>
+  <!-- Nav bar -->
+  <div class="bg-gray-800 shadow-lg ">
+    <div class="h-16 fixed bottom-0 mt-12 md:relative md:h-screen z-10 w-full md:w-48 boder-b-1">
+      <div
+        class="md:mt-12 md:w-48 md:fixed md:left-0 md:top-0 h-full content-center md:content-start text-left justify-between bg-gray-900 md:bg-gray-800">
+        <ul class="list-reset flex flex-row md:flex-col text-center md:text-left mt-2">
+          <li class="flex-1">
+            <a routerLink="/dashboard" routerLinkActive="border-blue-500" #rla1="routerLinkActive"
+              class="block py-1 md:py-3 pl-4 align-middle text-white no-underline hover:text-white border-b-2 border-gray-700 hover:border-blue-600">
+              <i class="fas fa-tachometer-alt pr-0 md:pr-3 group-hover:text-blue-500"
+                [class.text-blue-500]="rla1.isActive"></i>
+              <span
+                class="pb-1 md:pb-0 text-xs md:text-base text-gray-300 md:text-gray-400 block md:inline-block">Dashboard</span>
+            </a>
+          </li>
+          <li class="flex-1">
+            <a routerLink="/compare" routerLinkActive="border-pink-500" #rlb="routerLinkActive"
+              class="block group py-1 md:py-3 pl-4 align-middle text-white no-underline hover:text-white border-b-2 border-gray-700 hover:border-pink-500">
+              <i class="fa fa-chart-area pr-0 md:pr-3 group-hover:text-pink-500"
+                [class.text-pink-500]="rlb.isActive"></i>
+              <span
+                class="pb-1 md:pb-0 text-xs md:text-base text-gray-300 md:text-gray-400 block md:inline-block">Compare</span>
+            </a>
+          </li>
+          <!-- <li class="flex-1">
+            <a routerLink="/world" routerLinkActive="border-green-500" #rlc="routerLinkActive"
+              class="block group py-1 md:py-3 pl-4 align-middle text-white no-underline hover:text-white border-b-2 border-gray-700 hover:border-green-500">
+              <i class="fa fa-map-marked-alt pr-0 md:pr-3 group-hover:text-green-500"
+                [class.text-green-500]="rlc.isActive"></i>
+              <span class="pb-1 md:pb-0 text-xs md:text-base text-gray-300 md:text-gray-400 block md:inline-block">World Map</span>
+            </a>
+          </li> -->
+        </ul>
+      </div>
+    </div>
+  </div>
 
   <div class="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
     <router-outlet></router-outlet>
-
-
-
   </div>
+
 </div>

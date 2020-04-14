@@ -9,4 +9,6 @@ const routes: Routes = [{ path: '', component: CompareCountriesComponent }];
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CompareCountriesRoutingModule { }
+export class CompareCountriesRoutingModule {
+  static components = [CompareCountriesComponent]
+}

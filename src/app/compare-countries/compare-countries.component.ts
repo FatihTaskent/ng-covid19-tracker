@@ -3,8 +3,8 @@ import { combineLatest } from 'rxjs';
 import { Label } from 'ng2-charts';
 import { ChartOptions, ChartDataSets } from 'chart.js';
 
-import { StatisticsServiceService } from '../services/statistics-service.service';
-import { CovidData } from '../models/coviddata';
+import { StatisticsServiceService } from '../core/services/statistics-service.service';
+import { CovidData } from '../core/models/coviddata';
 
 @Component({
   selector: 'app-compare-countries',
@@ -47,15 +47,12 @@ export class CompareCountriesComponent implements OnInit {
     combineLatest(
       this._statisticsService.getCasesForCountry('china'),
       this._statisticsService.getCasesForCountry('netherlands'),
-      this._statisticsService.getCasesForCountry('united-states'),
+      //this._statisticsService.getCasesForCountry('united-states'),
       this._statisticsService.getCasesForCountry('italy'),
       this._statisticsService.getCasesForCountry('turkey'),
-      this._statisticsService.getCasesForCountry('france'),
-    )
-      // add incremental number to display first case occurance for 
-      //.pipe(map(series => series.map(serie => serie.map((elem, i) => <any>{index: i, ...elem}))))
-      .subscribe((series) => {
-        // reset chart
+      this._statisticsService.getCasesForCountry('france')
+    ).subscribe((series) => {
+        // reset charts
         this.lineChartData = [];
 
         // Set yaxe labels to the longest series

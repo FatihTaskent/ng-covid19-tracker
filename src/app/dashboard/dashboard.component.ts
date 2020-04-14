@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StatisticsServiceService } from '../services/statistics-service.service'
+import { StatisticsServiceService } from '../core/services/statistics-service.service'
 import { CounterCard } from './counter-card/counter-card';
 
 @Component({
