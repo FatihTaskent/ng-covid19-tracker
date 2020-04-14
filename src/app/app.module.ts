@@ -14,7 +14,7 @@ import { BrowserModule } from '@angular/platform-browser';
     HttpClientModule,
     ChartsModule,
     AppRouterModule
-  ],
+  ], 
   declarations: [
     AppComponent
   ],

@@ -1,40 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { combineLatest } from 'rxjs';
-import { Label } from 'ng2-charts';
-import { ChartOptions, ChartDataSets } from 'chart.js';
+import { combineLatest, Observable } from 'rxjs';
 
 import { StatisticsServiceService } from '../core/services/statistics-service.service';
-import { CovidData } from '../core/models/coviddata';
+import LineChart from './line-chart';
+import { CovidDataModel } from '../core/models/covid-data-model';
 
 @Component({
   selector: 'app-compare-countries',
   templateUrl: './compare-countries.component.html'
 })
 export class CompareCountriesComponent implements OnInit {
-  // Pre defined colors         [bgColor, borderColor]
-  private colors: [string, string][] = [["#fff5f5", "#e53e3e"],
-                                        ["#fffaf0", "#dd6b20"],
-                                        ["#f0fff4", "#38a169"],
-                                        ["#fff5f7", "#d53f8c"],
-                                        ["#faf5ff", "#9f7aea"],
-                                        ["#f7fafc", "#a0aec0"],
-                                        ["#fffaf0", "#ed8936"],
-                                        ["#e6fffa", "#38b2ac"]]
-  public lineChartData: ChartDataSets[] = [
-    { label: "Country", data: [] }
-  ];
-  public lineChartLabels: Label[] = []
-  public lineChartOptions: (ChartOptions & { annotation: any }) = {
-    annotation: null,
-    responsive: true,
-    maintainAspectRatio: false,
-    tooltips: {
-      mode: 'index',
-      intersect: false
-    }
-  };
-  public lineChartLegend = true;
 
+  // chart objects
+  public casesChart: LineChart = new LineChart();
+  public deathsChart: LineChart = new LineChart();
 
   private _statisticsService: StatisticsServiceService;
 
@@ -43,41 +22,57 @@ export class CompareCountriesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let countries : string[] = ['china', 'netherlands', 'italy', 'turkey', 'france', 'spain']
+
     // Get data for country
-    combineLatest(
-      this._statisticsService.getCasesForCountry('china'),
-      this._statisticsService.getCasesForCountry('netherlands'),
-      //this._statisticsService.getCasesForCountry('united-states'),
-      this._statisticsService.getCasesForCountry('italy'),
-      this._statisticsService.getCasesForCountry('turkey'),
-      this._statisticsService.getCasesForCountry('france')
-    ).subscribe((series) => {
-        // reset charts
-        this.lineChartData = [];
+    combineLatest(this.getCasesForCountries(countries)).subscribe((cases) => this.fillChartData(cases, this.casesChart));
+    combineLatest(this.getDeathForCountries(countries)).subscribe((deaths) => this.fillChartData(deaths, this.deathsChart));
+  }
 
-        // Set yaxe labels to the longest series
-        let itemCount = series.reduce((a, b) => a.length > b.length ? a : b).length
-        this.lineChartLabels = [...Array(itemCount).keys()].map(m => m.toString());
+  /**
+   * Fils the chart object with covid data
+   * @param data An array of covid data per record (day) per country
+   * @param chart The reference to the chart options object
+   */
+  private fillChartData(data : CovidDataModel[][],chart : LineChart) {
+        // Reset data
+        chart.lineChartSeries = [];
 
-        // draw each serie
-        series.forEach(serie => {
+        // Set Y-axes by the amount of days of the longest coutnry
+        let dayCount = data.reduce((a, b) => a.length > b.length ? a : b).length
+        chart.lineChartLabels = [...Array(dayCount).keys()].map(m => m.toString());
+
+        // Reset color index and create serie per country
+        this.colorCounter = 0
+        data.forEach(serie => {
           let color = this.popColor()
-          this.lineChartData.push(this.createSeries(serie, color[0], color[1]));
+          chart.lineChartSeries.push(this.createSeries(serie, color[0], color[1]));
         })
-      })
   }
 
-  private colorCounter = 0;
-  private popColor(): [string, string] {
-    if (this.colorCounter == this.colors.length) {
-      this.colorCounter = 0;
-    }
-
-    return this.colors[++this.colorCounter];
+  /**
+   * Returns an array of observales for the covid-19 cases per country
+   * @param countries the countries to get the cases for
+   */
+  private getCasesForCountries(countries: string[]) : Observable<CovidDataModel[]>[] {
+    return countries.map(country => this._statisticsService.getCasesForCountry(country));
   }
 
+  /**
+   * Returns an array of observables for the death count per country
+   * @param countries The countries to get the death count for
+   */
+  private getDeathForCountries(countries: string[]):  Observable<CovidDataModel[]>[] {
+    return countries.map(country => this._statisticsService.getDeathsForCountry(country));
+  }
 
-  private createSeries(data: CovidData[], backgroundColor: string, borderColor: string): ChartDataSets {
+  /**
+   * Returns a serie including the data
+   * @param data the Covid data 
+   * @param backgroundColor The color to fill the line background
+   * @param borderColor The color for the line
+   */
+  private createSeries(data: CovidDataModel[], backgroundColor: string, borderColor: string) {
     return {
       label: data[0].country,
       data: data.map(c => c.cases),
@@ -88,4 +83,25 @@ export class CompareCountriesComponent implements OnInit {
       backgroundColor: backgroundColor
     };
   }
+
+  /** 
+   * Returns a diffrent color from a set of colors each time this method is called 
+   * */
+  private popColor(): [string, string] {
+    if (this.colorCounter == this.colors.length) {
+      this.colorCounter = 0;
+    }
+
+    return this.colors[++this.colorCounter];
+  }
+  private colorCounter = 0;
+  // Pre defined colors                 [bgColor, borderColor]
+  private colors: [string, string][] = [["#fff5f5", "#e53e3e"],
+                                        ["#fffaf0", "#dd6b20"],
+                                        ["#f0fff4", "#38a169"],
+                                        ["#fff5f7", "#d53f8c"],
+                                        ["#faf5ff", "#9f7aea"],
+                                        ["#f7fafc", "#a0aec0"],
+                                        ["#fffaf0", "#ed8936"],
+                                        ["#e6fffa", "#38b2ac"]]
 }

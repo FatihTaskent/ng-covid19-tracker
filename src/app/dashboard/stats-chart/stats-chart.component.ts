@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartPoint } from 'chart.js';
 import { StatisticsServiceService } from 'src/app/core/services/statistics-service.service';
 import { combineLatest } from 'rxjs';
-import { CovidData } from 'src/app/core/models/coviddata';
+import { CovidDataModel } from 'src/app/core/models/covid-data-model';
 
 @Component({
   selector: 'stats-chart',
@@ -36,7 +36,6 @@ export class StatsChartComponent implements OnInit {
       ]
     }
   };
-  public lineChartLegend = true;
 
   private _statisticsService: StatisticsServiceService;
 
@@ -58,7 +57,7 @@ export class StatsChartComponent implements OnInit {
 
   @Input() country: string;
 
-  private createSeries(label: string, data: CovidData[] ,borderColor: string, backgroundColor: string) :ChartDataSets {
+  private createSeries(label: string, data: CovidDataModel[] ,borderColor: string, backgroundColor: string) :ChartDataSets {
     return {
       label: label, 
       data: data.map(c => <ChartPoint>{x: c.date, y: c.cases}), 

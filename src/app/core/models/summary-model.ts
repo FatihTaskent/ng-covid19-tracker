@@ -1,4 +1,4 @@
-export interface TotalStats {
+export interface SummaryModel {
     NewConfirmed: number;
     TotalConfirmed: number;
 
