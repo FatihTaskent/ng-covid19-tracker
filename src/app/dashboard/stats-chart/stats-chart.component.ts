@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartPoint } from 'chart.js';
-import { StatisticsServiceService } from 'src/app/core/services/statistics-service.service';
+import { StatisticsService } from 'src/app/core/services/statistics.service';
 import { combineLatest } from 'rxjs';
 import { CovidDataModel } from 'src/app/core/models/covid-data-model';
 
@@ -37,9 +37,9 @@ export class StatsChartComponent implements OnInit {
     }
   };
 
-  private _statisticsService: StatisticsServiceService;
+  private _statisticsService: StatisticsService;
 
-  constructor(private statisticsService: StatisticsServiceService) {
+  constructor(private statisticsService: StatisticsService) {
     this._statisticsService = statisticsService;
    }
 

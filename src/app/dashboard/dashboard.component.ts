@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StatisticsServiceService } from '../core/services/statistics-service.service'
+import { StatisticsService } from '../core/services/statistics.service'
 import { SummaryCard } from './summary-card/summary-card-model';
 
 @Component({
@@ -8,11 +8,11 @@ import { SummaryCard } from './summary-card/summary-card-model';
 })
 export class DashboardComponent implements OnInit {
 
-  private _statisticsService: StatisticsServiceService;
+  private _statisticsService: StatisticsService;
 
   public summary: SummaryCard[] = [];
 
-  constructor(statisticsService: StatisticsServiceService) {
+  constructor(statisticsService: StatisticsService) {
     this._statisticsService = statisticsService;
   }
 

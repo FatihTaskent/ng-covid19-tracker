@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
 
-import { StatisticsServiceService } from '../core/services/statistics-service.service';
+import { StatisticsService } from '../core/services/statistics.service';
 import LineChart from './line-chart';
 import { CovidDataModel } from '../core/models/covid-data-model';
 
@@ -15,9 +15,9 @@ export class CompareCountriesComponent implements OnInit {
   public casesChart: LineChart = new LineChart();
   public deathsChart: LineChart = new LineChart();
 
-  private _statisticsService: StatisticsServiceService;
+  private _statisticsService: StatisticsService;
 
-  constructor(private statisticsService: StatisticsServiceService) {
+  constructor(private statisticsService: StatisticsService) {
     this._statisticsService = statisticsService;
   }
 
@@ -25,8 +25,11 @@ export class CompareCountriesComponent implements OnInit {
     let countries : string[] = ['china', 'netherlands', 'italy', 'turkey', 'france', 'spain']
 
     // Get data for country
-    combineLatest(this.getCasesForCountries(countries)).subscribe((cases) => this.fillChartData(cases, this.casesChart));
-    combineLatest(this.getDeathForCountries(countries)).subscribe((deaths) => this.fillChartData(deaths, this.deathsChart));
+    combineLatest(this.getCasesForCountries(countries))
+      .subscribe((cases) => this.fillChartData(cases, this.casesChart));
+
+    combineLatest(this.getDeathForCountries(countries))
+      .subscribe((deaths) => this.fillChartData(deaths, this.deathsChart));
   }
 
   /**
