@@ -4,6 +4,7 @@ import { combineLatest, Observable } from 'rxjs';
 import { StatisticsService } from '../core/services/statistics.service';
 import LineChart from './line-chart';
 import { CovidDataModel } from '../core/models/covid-data-model';
+import { CountryService } from '../core/services/country.service';
 
 @Component({
   selector: 'app-compare-countries',
@@ -16,13 +17,15 @@ export class CompareCountriesComponent implements OnInit {
   public deathsChart: LineChart = new LineChart();
 
   private _statisticsService: StatisticsService;
+  private _countryService: CountryService;
 
-  constructor(private statisticsService: StatisticsService) {
+  constructor(statisticsService: StatisticsService, countryService: CountryService) {
     this._statisticsService = statisticsService;
+    this._countryService = countryService;
   }
 
   ngOnInit(): void {
-    let countries : string[] = ['china', 'netherlands', 'italy', 'turkey', 'france', 'spain']
+    let countries = this._countryService.getCountries();
 
     // Get data for country
     combineLatest(this.getCasesForCountries(countries))
@@ -37,20 +40,23 @@ export class CompareCountriesComponent implements OnInit {
    * @param data An array of covid data per record (day) per country
    * @param chart The reference to the chart options object
    */
-  private fillChartData(data : CovidDataModel[][],chart : LineChart) {
-        // Reset data
-        chart.lineChartSeries = [];
+  private fillChartData(data : CovidDataModel[][], chart : LineChart) {
+    // Reset data
+    chart.lineChartSeries = [];
 
-        // Set Y-axes by the amount of days of the longest coutnry
-        let dayCount = data.reduce((a, b) => a.length > b.length ? a : b).length
-        chart.lineChartLabels = [...Array(dayCount).keys()].map(m => m.toString());
+    // Set Y-axes by the amount of days of the longest coutnry
+    let dayCount = data.reduce((a, b) => a.length > b.length ? a : b).length
+    chart.lineChartLabels = [...Array(dayCount).keys()].map(m => m.toString());
 
-        // Reset color index and create serie per country
-        this.colorCounter = 0
-        data.forEach(serie => {
-          let color = this.popColor()
-          chart.lineChartSeries.push(this.createSeries(serie, color[0], color[1]));
-        })
+    // Reset color index and create serie per country
+    this.colorCounter = 0
+    data.forEach(serie => {
+      // skip country if no data exists
+      if(serie.length > 0) {
+        let color = this.popColor()
+        chart.lineChartSeries.push(this.createSeries(serie, color[0], color[1]));
+      }
+    })
   }
 
   /**
@@ -95,7 +101,7 @@ export class CompareCountriesComponent implements OnInit {
       this.colorCounter = 0;
     }
 
-    return this.colors[++this.colorCounter];
+    return this.colors[this.colorCounter++];
   }
   private colorCounter = 0;
   // Pre defined colors                 [bgColor, borderColor]
