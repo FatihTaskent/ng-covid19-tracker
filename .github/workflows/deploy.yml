@@ -1,4 +1,4 @@
-name: CI deply build
+name: CI deploy build
 
 on:
   push:
@@ -15,10 +15,11 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v1
 
-    - name: Install dependancies
+    - name: Install npm dependancies
       run: npm install
 
+    - name: Build project
+      run: npx ng build --prod --base-href /ng-covid19-tracker/
+
     - name: Publish to github pages
-      run: |
-        ng build --prod --base-href /ng-covid19-tracker/
-        npx ngh --dir=dist/ng-covid19-tracker
+      run: npx ngh --dir=dist/ng-covid19-tracker
