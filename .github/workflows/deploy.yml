@@ -1,4 +1,4 @@
-name: CI deploy build
+name: CI build pipeline
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  deplay:
+  publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,4 +22,4 @@ jobs:
       run: npx ng build --prod --base-href /ng-covid19-tracker/
 
     - name: Publish to github pages
-      run: npx ngh --dir=dist/ng-covid19-tracker
+      run: npx ngh
