@@ -1,0 +1,24 @@
+name: CI deply build
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deplay:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+
+    - name: Install dependancies
+      run: npm install
+
+    - name: Publish to github pages
+      run: |
+        ng build --prod --base-href /ng-covid19-tracker/
+        npx ngh --dir=dist/ng-covid19-tracker
