@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StatisticsService } from '../core/services/statistics.service'
 import { SummaryCard } from './summary-card/summary-card-model';
+import { CountryService } from '../core/services/country.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,15 +9,19 @@ import { SummaryCard } from './summary-card/summary-card-model';
 })
 export class DashboardComponent implements OnInit {
 
-  private _statisticsService: StatisticsService;
-
   public summary: SummaryCard[] = [];
+  public countries : string[] = [];
 
-  constructor(statisticsService: StatisticsService) {
+  private _statisticsService: StatisticsService;
+  private _countryService: CountryService;
+
+  constructor(statisticsService: StatisticsService, countryService: CountryService) {
     this._statisticsService = statisticsService;
+    this._countryService = countryService;
   }
 
   ngOnInit(): void {
+    // Init summary
     this._statisticsService.getSumamry()
     .subscribe(r => {
       this.summary.push({ label: 'New Deaths', value: r.NewDeaths, icon: 'procedures', color:'pink' } as SummaryCard)
@@ -26,6 +31,11 @@ export class DashboardComponent implements OnInit {
       this.summary.push({ label: 'Total Cases', value: r.TotalConfirmed, icon: 'head-side-mask', color:'orange' } as SummaryCard)
       this.summary.push({ label: 'Total Recorvered', value: r.TotalRecovered, icon: 'clipboard-check', color:'green' } as SummaryCard)
     });
+
+    // Get countries
+    this.countries = this._countryService.getCountries()
   }
+
+  
 
 }
