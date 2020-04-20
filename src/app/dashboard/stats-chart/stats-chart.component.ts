@@ -16,6 +16,7 @@ export class StatsChartComponent implements OnInit {
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     annotation: null,
     responsive: true,
+    maintainAspectRatio: false,
     tooltips: { 
       mode: 'index', 
       intersect: false 
